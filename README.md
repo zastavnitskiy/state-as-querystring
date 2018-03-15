@@ -6,6 +6,8 @@ Idea is simple. When state in initiated, we read it from the query string.
 Whenever it changes, we write it to the query string.
 This keeps start between page views and allows sharing urls of a given state.
 
+[Try here](https://13n3pr91nl.codesandbox.io/?text=Edit%20me)
+
 ### React example
 ```javascript
 
