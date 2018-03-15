@@ -1,6 +1,6 @@
 {
   "name": "state-as-querystring",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Save application state in the querystring. Restore it when page is refreshed.",
   "main": "index.js",
   "author": "Pavel Zastavnitskiy",
