@@ -1,4 +1,4 @@
-# state-as-querystring
+# state-as-querystring [![Build Status](https://travis-ci.org/zastavnitskiy/state-as-querystring.svg?branch=master)](https://travis-ci.org/zastavnitskiy/state-as-querystring)
 Save your application state in query string between page views.
 
 ## Usage
