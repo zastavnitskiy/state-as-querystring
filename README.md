@@ -4,7 +4,7 @@ Save your application state in query string between page views.
 ## Usage
 Idea is simple. When state in initiated, we read it from the query string.
 Whenever it changes, we write it to the query string.
-This keeps start between page views and allows sharing screen.
+This keeps start between page views and allows sharing urls of a given state.
 
 ### React example
 ```javascript
