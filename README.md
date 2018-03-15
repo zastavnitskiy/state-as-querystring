@@ -49,3 +49,7 @@ store.subscribe(() => saveStateToURL(store.getState()));
 
 ```
 [![Edit redux-state-as-querystring](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/jlxz5vm5n3)
+
+A bit more complex example - with arrays in the state + partial syncing of the state.
+
+[![Edit redux-state-as-querystring — a bit more complex example](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/mo573kq3rx)
