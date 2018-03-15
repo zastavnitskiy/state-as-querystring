@@ -13,3 +13,6 @@ const store = createStore(reducer, readStateFromURL());
 
 // write state to url when updating
 store.subscribe(() => syncState(store.getState()));
+
+### React example
+[![Edit 13n3pr91nl](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/13n3pr91nl)
