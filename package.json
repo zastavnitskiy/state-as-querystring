@@ -4,5 +4,17 @@
   "description": "Save application state in the querystring. Restore it when page is refreshed.",
   "main": "index.js",
   "author": "Pavel Zastavnitskiy",
-  "license": "MIT"
+  "license": "MIT",
+  "scripts": {
+    "test": "jest"
+  },
+  "devDependencies": {
+    "babel-jest": "^23.0.0-alpha.0",
+    "babel-plugin-transform-es2015-destructuring": "^6.23.0",
+    "babel-preset-env": "^1.6.1",
+    "jest": "^23.0.0-alpha.0"
+  },
+  "dependencies": {
+    "babel-plugin-transform-object-rest-spread": "^6.26.0"
+  }
 }
