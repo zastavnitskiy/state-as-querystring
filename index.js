@@ -77,22 +77,15 @@ export function _URLSearchParamsToState(urlSearchParams, defaultState) {
   return { ...defaultState, ...state };
 }
 
-export function syncURL(state) {
-  const serialized = _stateToURLSearchParams(state, [
-    'selected',
-    'reason',
-    'edit',
-    'selectedBlocks',
-    'mode',
-    'modal'
-  ]);
+export function saveStateToURL(state, propsToSync) {
+  const serialized = _stateToURLSearchParams(state, propsToSync);
   const url = new URL(window.location);
   url.search = serialized;
 
   window.history.pushState({ state: state }, '', url.toString());
 }
 
-export function readUrl() {
+export function readStateFromURL() {
   const url = new URL(window.location);
   const { search } = url;
   return _URLSearchParamsToState(search.substr(1));
