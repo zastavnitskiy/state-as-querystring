@@ -1,5 +1,7 @@
 # state-as-querystring [![Build Status](https://travis-ci.org/zastavnitskiy/state-as-querystring.svg?branch=master)](https://travis-ci.org/zastavnitskiy/state-as-querystring)
 Save your application state in query string between page views.
+  
+String, Number and Boolean and Array values will be saved as is, while object values will be encoded as JSON.
 
 ## Usage
 Idea is simple. When state in initiated, we read it from the query string.
