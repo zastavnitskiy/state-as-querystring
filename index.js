@@ -11,37 +11,50 @@ export function _stateToURLSearchParams(
     .forEach(key => {
       const value = state[key];
 
-      switch (typeof value) {
-        case 'boolean':
-        case 'number':
-        case 'string':
-          result.push(`${key}=${encodeURIComponent(value)}`);
-          break;
-        default:
-          if (Array.isArray(value)) {
-            value.forEach(value => {
-              result.push(`${key}[]=${value}`);
-            });
-            break;
-          } else {
-            result.push(`${key}=${value}`);
-          }
+      if (Array.isArray(value)) {
+        value.forEach(value => {
+          result.push(`${key}[]=${_encodeValue(value)}`);
+        });
+      } else {
+        result.push(`${key}=${_encodeValue(value)}`);
       }
     });
 
-  return result.join('&');
+  return result.join("&");
 }
 
-function _processValue(rawValue) {
-  switch (rawValue) {
-    case 'true':
+function _encodeValue(rawValue) {
+  let result;
+
+  switch (typeof rawValue) {
+    case "number":
+    case "boolean":
+    case "string":
+      result = rawValue;
+      break
+    default:
+      result = JSON.stringify(rawValue);
+      break;
+  }
+
+  return encodeURIComponent(result);
+}
+
+function _decodeValue(rawEncodedString) {
+  const rawString = decodeURIComponent(rawEncodedString);
+  switch (rawString) {
+    case "true":
       return true;
-    case 'false':
+    case "false":
       return false;
     default:
-      const numValue = parseInt(rawValue, 10);
+      const numValue = parseInt(rawString, 10);
       if (isNaN(numValue)) {
-        return decodeURIComponent(rawValue);
+        try {
+          return JSON.parse(rawString);
+        } catch (e) {
+          return rawString;
+        }
       } else {
         return numValue;
       }
@@ -49,10 +62,10 @@ function _processValue(rawValue) {
 }
 
 export function _URLSearchParamsToState(urlSearchParams, defaultState) {
-  const parts = urlSearchParams.split('&');
+  const parts = urlSearchParams.split("&");
 
   const pairs = parts
-    .map(part => part.split('='))
+    .map(part => part.split("="))
     .filter(pair => pair.length === 2);
 
   const keyValues = pairs.reduce((memo, [key, value]) => {
@@ -67,10 +80,10 @@ export function _URLSearchParamsToState(urlSearchParams, defaultState) {
   const state = {};
 
   keyValues.forEach((value, key) => {
-    if (key.endsWith('[]')) {
-      state[key.slice(0, -2)] = value.map(_processValue);
+    if (key.endsWith("[]")) {
+      state[key.slice(0, -2)] = value.map(_decodeValue);
     } else {
-      state[key] = _processValue(value[0]);
+      state[key] = _decodeValue(value[0]);
     }
   });
 
@@ -82,7 +95,7 @@ export function saveStateToURL(state, propsToSync) {
   const url = new URL(window.location);
   url.search = serialized;
 
-  window.history.pushState({ state: state }, '', url.toString());
+  window.history.pushState({ state: state }, "", url.toString());
 }
 
 export function readStateFromURL() {
