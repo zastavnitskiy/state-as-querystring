@@ -3,7 +3,18 @@
   "version": "1.1.3",
   "description": "Save application state in the querystring. Restore it when page is refreshed.",
   "main": "dist/index.js",
-  "respository": "https://github.com/zastavnitskiy/state-as-querystring",
+  "respository": {
+    "type": "git",
+    "url": "https://github.com/zastavnitskiy/state-as-querystring"
+  },
+  "keywords": [
+    "redux",
+    "state",
+    "react",
+    "router",
+    "react-router",
+    "redux-router"
+  ],
   "author": "Pavel Zastavnitskiy",
   "license": "MIT",
   "scripts": {
