@@ -3,7 +3,6 @@
     [
       "env",
       {
-        "modules": 'commonjs',
         "targets": {
           "node": "current",
           "browsers": "last 2 versions"
@@ -11,8 +10,5 @@
       }
     ]
   ],
-  "plugins": [
-    "transform-es2015-destructuring",
-    "transform-object-rest-spread"
-  ]
+  "plugins": ["transform-es2015-destructuring", "transform-object-rest-spread"]
 }
