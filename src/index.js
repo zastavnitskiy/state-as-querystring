@@ -95,7 +95,7 @@ export function saveStateToURL(state, propsToSync) {
   const url = new URL(window.location);
   url.search = serialized;
 
-  window.history.pushState({ state: state }, "", url.toString());
+  window.history.replaceState({ state: state }, "", url.toString());
 }
 
 export function readStateFromURL() {
