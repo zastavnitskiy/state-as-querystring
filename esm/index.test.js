@@ -98,15 +98,19 @@ describe("decoding", () => {
     expect(state.third).toEqual("3");
   });
 
-   it("should decode objects as json", () => {
-    const state = _URLSearchParamsToState("obj=%7B%22hello%2F%22%3A%22world%26%22%7D");
-    
+  it("should decode objects as json", () => {
+    const state = _URLSearchParamsToState(
+      "obj=%7B%22hello%2F%22%3A%22world%26%22%7D"
+    );
+
     expect(state.obj).toBeDefined();
-    expect(state.obj['hello/']).toEqual("world&")
+    expect(state.obj["hello/"]).toEqual("world&");
   });
 
   it("should decode objects in arrays too", () => {
-    const state = _URLSearchParamsToState("arr[]=%7B%22hello%2F%22%3A%22world%26%22%7D&arr[]=other");
+    const state = _URLSearchParamsToState(
+      "arr[]=%7B%22hello%2F%22%3A%22world%26%22%7D&arr[]=other"
+    );
 
     const string = _stateToURLSearchParams({
       arr: [
@@ -119,7 +123,7 @@ describe("decoding", () => {
 
     expect(state.arr).toBeDefined();
     expect(state.arr.length).toEqual(2);
-    expect(state.arr[0]['hello/']).toEqual('world&');
-    expect(state.arr[1]).toEqual('other');
+    expect(state.arr[0]["hello/"]).toEqual("world&");
+    expect(state.arr[1]).toEqual("other");
   });
 });
