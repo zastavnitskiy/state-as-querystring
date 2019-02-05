@@ -93,9 +93,10 @@ export function _URLSearchParamsToState(urlSearchParams, defaultState) {
 export function saveStateToURL(state, propsToSync) {
   const serialized = _stateToURLSearchParams(state, propsToSync);
   const url = new URL(window.location);
-  url.search = serialized;
-
-  window.history.replaceState({ state: state }, "", url.toString());
+  if (url.search.substr(1) !== serialized) {
+    url.search = serialized;
+    window.history.replaceState({ state: state }, "", url.toString());
+  }
 }
 
 export function readStateFromURL() {

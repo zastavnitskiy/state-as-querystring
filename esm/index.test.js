@@ -1,4 +1,8 @@
-import { _URLSearchParamsToState, _stateToURLSearchParams } from "./index";
+import {
+  _URLSearchParamsToState,
+  _stateToURLSearchParams,
+  saveStateToURL
+} from "./index";
 
 describe("encoding", () => {
   it("should encode string parameters", () => {
@@ -125,5 +129,33 @@ describe("decoding", () => {
     expect(state.arr.length).toEqual(2);
     expect(state.arr[0]["hello/"]).toEqual("world&");
     expect(state.arr[1]).toEqual("other");
+  });
+});
+
+describe("state updates", () => {
+  beforeEach(() => {
+    jest.spyOn(window.history, "replaceState");
+  });
+
+  afterEach(() => {
+    window.history.replaceState.mockReset();
+  })
+
+  const steps = [
+    [{hello: 'world'}, undefined, 1],
+    [{hello: 'world'}, undefined, 1],
+    [{hello: 'world2'}, undefined, 2],
+    [{hello: 'world2'}, undefined, 2],
+    [{hello: 'world2', hello2: 'world'}, undefined, 3],
+    [{hello: 'world2', hello2: 'world'}, undefined, 3],
+    [{hello: 'world2', hello2: 'world', hello3: 'world'}, ['hello', 'hello2'], 3],
+    [{hello: 'world2', hello2: 'world', hello3: 'world'}, undefined, 4],
+  ]
+
+  it("should update state when needed", () => {
+    for(let step of steps) {
+      saveStateToURL(step[0], step[1]);
+      expect(window.history.replaceState).toHaveBeenCalledTimes(step[2]);
+    }
   });
 });
