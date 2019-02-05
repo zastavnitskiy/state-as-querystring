@@ -4,10 +4,7 @@
   "description": "Save application state in the querystring. Restore it when page is refreshed.",
   "main": "./cjs/index.js",
   "module": "./esm/index.js",
-  "respository": {
-    "type": "git",
-    "url": "https://github.com/zastavnitskiy/state-as-querystring"
-  },
+  "respository": "github:zastavnitskiy/state-as-querystring",
   "keywords": [
     "redux",
     "state",

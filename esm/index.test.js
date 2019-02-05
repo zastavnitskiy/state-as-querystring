@@ -1,4 +1,8 @@
-import { _URLSearchParamsToState, _stateToURLSearchParams } from "./index";
+import {
+  _URLSearchParamsToState,
+  _stateToURLSearchParams,
+  saveStateToURL
+} from "./index";
 
 describe("encoding", () => {
   it("should encode string parameters", () => {
@@ -98,15 +102,19 @@ describe("decoding", () => {
     expect(state.third).toEqual("3");
   });
 
-   it("should decode objects as json", () => {
-    const state = _URLSearchParamsToState("obj=%7B%22hello%2F%22%3A%22world%26%22%7D");
-    
+  it("should decode objects as json", () => {
+    const state = _URLSearchParamsToState(
+      "obj=%7B%22hello%2F%22%3A%22world%26%22%7D"
+    );
+
     expect(state.obj).toBeDefined();
-    expect(state.obj['hello/']).toEqual("world&")
+    expect(state.obj["hello/"]).toEqual("world&");
   });
 
   it("should decode objects in arrays too", () => {
-    const state = _URLSearchParamsToState("arr[]=%7B%22hello%2F%22%3A%22world%26%22%7D&arr[]=other");
+    const state = _URLSearchParamsToState(
+      "arr[]=%7B%22hello%2F%22%3A%22world%26%22%7D&arr[]=other"
+    );
 
     const string = _stateToURLSearchParams({
       arr: [
@@ -119,7 +127,35 @@ describe("decoding", () => {
 
     expect(state.arr).toBeDefined();
     expect(state.arr.length).toEqual(2);
-    expect(state.arr[0]['hello/']).toEqual('world&');
-    expect(state.arr[1]).toEqual('other');
+    expect(state.arr[0]["hello/"]).toEqual("world&");
+    expect(state.arr[1]).toEqual("other");
+  });
+});
+
+describe("state updates", () => {
+  beforeEach(() => {
+    jest.spyOn(window.history, "replaceState");
+  });
+
+  afterEach(() => {
+    window.history.replaceState.mockReset();
+  })
+
+  const steps = [
+    [{hello: 'world'}, undefined, 1],
+    [{hello: 'world'}, undefined, 1],
+    [{hello: 'world2'}, undefined, 2],
+    [{hello: 'world2'}, undefined, 2],
+    [{hello: 'world2', hello2: 'world'}, undefined, 3],
+    [{hello: 'world2', hello2: 'world'}, undefined, 3],
+    [{hello: 'world2', hello2: 'world', hello3: 'world'}, ['hello', 'hello2'], 3],
+    [{hello: 'world2', hello2: 'world', hello3: 'world'}, undefined, 4],
+  ]
+
+  it("should update state when needed", () => {
+    for(let step of steps) {
+      saveStateToURL(step[0], step[1]);
+      expect(window.history.replaceState).toHaveBeenCalledTimes(step[2]);
+    }
   });
 });
